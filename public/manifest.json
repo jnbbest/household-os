@@ -1,0 +1,17 @@
+{
+  "name": "Household OS",
+  "short_name": "HomeOS",
+  "description": "Your household operations in one system: Ownership, Money, Documents, and Sunday Reset.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3eee2",
+  "theme_color": "#bd4e29",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
