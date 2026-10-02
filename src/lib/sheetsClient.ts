@@ -14,17 +14,6 @@ const STORAGE_KEY_RESET = 'household_os_reset';
 const STORAGE_KEY_ICE = 'household_os_ice';
 
 export function getGoogleSheetUrl(): string {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY_SETTINGS);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (parsed.googleSheetUrl && parsed.googleSheetUrl.trim()) {
-        return parsed.googleSheetUrl.trim();
-      }
-    }
-  } catch (e) {}
-
-  // Fallback to Vercel Environment Variable
   const envUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
   return envUrl && typeof envUrl === 'string' ? envUrl.trim() : '';
 }

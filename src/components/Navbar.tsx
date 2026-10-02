@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Users, DollarSign, FileText, CalendarCheck, Settings, CheckCircle2, CloudOff } from 'lucide-react';
+import { Home, Users, DollarSign, FileText, CalendarCheck, Settings, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: string;
@@ -66,15 +66,24 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Right Controls: Sync Badge & Settings */}
-          <div className="flex items-center gap-3">
+          {/* Right Controls: Butler Badge, Sync Badge & Settings */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={onOpenSettings}
-              title={isSynced ? "Connected to Google Sheets" : "Running in Local Storage"}
+              title="Ghar Butler powered by Hermes 3"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono border border-terra/30 bg-terra/10 text-terra hover:bg-terra/20 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-terra animate-pulse" />
+              <span className="hidden sm:inline font-semibold">Hermes 3</span>
+            </button>
+
+            <button
+              onClick={onOpenSettings}
+              title={isSynced ? "Connected to Google Sheets" : "Google Sheet Not Connected · Click to setup"}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono border transition-colors ${
                 isSynced 
                   ? 'bg-sage/10 text-sage border-sage/30' 
-                  : 'bg-brass/10 text-brass border-brass/30'
+                  : 'bg-terra/10 text-terra border-terra/30 font-semibold'
               }`}
             >
               {isSynced ? (
@@ -84,8 +93,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </>
               ) : (
                 <>
-                  <CloudOff className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Local Storage</span>
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Sheet Not Connected</span>
                 </>
               )}
             </button>

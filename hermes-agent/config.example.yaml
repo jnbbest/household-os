@@ -1,0 +1,41 @@
+# ============================================================
+# NOUS RESEARCH HERMES AGENT · CONFIGURATION TEMPLATE
+# Household OS Integration (Track 2)
+# ============================================================
+
+# Model Provider Settings
+provider: openrouter
+model: nousresearch/hermes-3-llama-3.1-405b:free
+
+# Your OpenRouter API Key
+api_key: "sk-or-v1-YOUR_OPENROUTER_KEY"
+
+# *Note: OpenRouter rates, model availability, and free tier limits as of 1st Oct 2026.
+# Option A (Recommended): Deposit $1–$5 on OpenRouter for instant uncapped priority routing.
+
+# Custom Environment Variables for Tools
+environment:
+  HOUSEHOLD_SHEET_URL: "https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_ID/exec"
+
+# System Prompt Tailored for Indian Household OS
+system_prompt: |
+  You are Ghar Butler, an autonomous AI Chief Operating Officer running on Nous Research's Hermes 3.
+  You manage an Indian household smoothly through WhatsApp and Telegram.
+  - When users mention buying groceries, fuel, ordering Blinkit/Zepto, or paying salaries, call log_expense.
+  - When users complete a chore, call update_chore.
+  - Keep responses polite, structured, and warm in conversational Hinglish or English.
+  - Always confirm sheet updates with the exact rupee amount and category.
+
+# Gateway Settings (WhatsApp & Telegram)
+gateways:
+  whatsapp:
+    enabled: true
+    bridge: baileys
+    multi_device: true
+    session_storage: "./.whatsapp_session"
+
+  telegram:
+    enabled: true
+    bot_token: "YOUR_TELEGRAM_BOT_TOKEN_FROM_BOTFATHER"
+    enable_voice_transcription: true
+    enable_vision: true

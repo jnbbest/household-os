@@ -6,6 +6,8 @@ import { DocumentFinder } from './components/DocumentFinder';
 import { IceCardModal } from './components/IceCardModal';
 import { SundayReset } from './components/SundayReset';
 import { SettingsModal } from './components/SettingsModal';
+import { GharButler } from './components/GharButler';
+import { AlertTriangle } from 'lucide-react';
 
 import {
   DEFAULT_TASKS,
@@ -17,6 +19,7 @@ import {
 import {
   TaskOwnership,
   MoneyPoolState,
+  ExpenseItem,
   DocumentPointer,
   EmergencyInfo,
   SundayResetLog,
@@ -86,6 +89,14 @@ export const App: React.FC = () => {
     setMoneyState(updated);
     saveToLocal(KEYS.MONEY, updated);
     syncTabToSheet('Money_Pool', updated.items);
+  };
+
+  const handleAddExpense = (expense: ExpenseItem) => {
+    const updated: MoneyPoolState = {
+      ...moneyState,
+      items: [expense, ...moneyState.items]
+    };
+    handleUpdateMoney(updated);
   };
 
   const handleUpdateDocuments = (updated: DocumentPointer[]) => {
@@ -180,6 +191,26 @@ export const App: React.FC = () => {
         onOpenSettings={() => setIsSettingsOpen(true)}
       />
 
+      {/* Google Sheet Connection Warning Banner */}
+      {!isSynced && (
+        <div className="bg-terra/10 border-b border-terra/30 py-2.5 px-4 text-xs font-mono text-terra">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0 text-terra" />
+              <span>
+                <b>Google Sheet Not Connected:</b> Data is currently saving only in local memory on this device. Set <code className="bg-paper px-1 py-0.5 rounded border border-terra/30 text-ink">VITE_GOOGLE_SHEET_URL</code> in Vercel to sync across all household devices.
+              </span>
+            </div>
+            <button
+              onClick={() => setIsSettingsOpen(true)}
+              className="underline font-semibold hover:text-ink shrink-0 ml-6 sm:ml-0"
+            >
+              How to Connect &rarr;
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'ownership' && (
@@ -241,6 +272,16 @@ export const App: React.FC = () => {
         onExportData={handleExportData}
         onImportData={handleImportData}
         onResetDefaults={handleResetDefaults}
+      />
+
+      {/* Autonomous Ghar Butler (Hermes 3) */}
+      <GharButler
+        tasks={tasks}
+        moneyState={moneyState}
+        emergencyInfo={emergencyInfo}
+        onAddExpense={handleAddExpense}
+        onUpdateTasks={handleUpdateTasks}
+        onOpenSettings={() => setIsSettingsOpen(true)}
       />
     </div>
   );
