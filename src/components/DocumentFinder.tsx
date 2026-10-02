@@ -134,7 +134,7 @@ export const DocumentFinder: React.FC<DocumentFinderProps> = ({
         {categories.map((cat) => (
           <button
             key={cat.id}
-            onClick={() => setActiveDomain(cat.id)}
+            onClick={() => setActiveCategory(cat.id)}
             className={`px-3 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider whitespace-nowrap transition-colors ${
               activeCategory === cat.id
                 ? 'bg-ink text-paper font-semibold'

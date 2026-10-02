@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { EmergencyInfo } from '../types/household';
-import { X, Download, ShieldAlert, Phone, Heart, Hospital, Check } from 'lucide-react';
+import { X, Download, ShieldAlert, Check } from 'lucide-react';
 
 interface IceCardModalProps {
   isOpen: boolean;
